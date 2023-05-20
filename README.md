@@ -5,13 +5,14 @@ This is a very lightweight program to show a popup with the translation of the s
 ![image](https://github.com/GenjiFujimoto/dictpopup/assets/50422430/c4a3663b-fd91-4a66-95ad-f1528071c932)
 
 ## Dependencies
-xclip, sdcv
+xclip, sdcv, sselp, xdotool, clipnotify
 
 ## Setup
 First setup [sdcv](https://github.com/Dushistov/sdcv) according to their github page.
 Then compile with `make` and place `dictpopup` as well as `popup` in your PATH.
 
 ### For using it as watcher, Download the watcher.sh script and run it.
+
 
 ## Usage
 Call `dictpopup` to translate and display the popup of the selected text. The
