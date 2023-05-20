@@ -11,6 +11,8 @@ xclip, sdcv
 First setup [sdcv](https://github.com/Dushistov/sdcv) according to their github page.
 Then compile with `make` and place `dictpopup` as well as `popup` in your PATH.
 
+For using it as watcher, Download the watcher.sh script and run it.
+
 ## Usage
 Call `dictpopup` to translate and display the popup of the selected text. The
 popup can be dismissed by clicking on it.
