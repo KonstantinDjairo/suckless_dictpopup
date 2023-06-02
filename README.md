@@ -4,8 +4,6 @@ This is a very lightweight program to show a popup with the translation of the s
 
 ![image](https://files.catbox.moe/dx3hf5.png)
 
-![dict2](https://files.catbox.moe/r2ig4m.png)
-
 ## Dependencies
 most of them might be already installed.
 
