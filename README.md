@@ -25,8 +25,8 @@ This is not meant to be running all the time, since it looks up everything that 
 Disable when using mpvacious for example.
 
 
-## Usage
-Bind to a shortcut \
+## Usage <br>
+Bind to a shortcut <br> \
 To add a keyboard shortcut, you can use options of your WM or DE. You can also use sxhkd. \
 The popup can be dismissed by clicking on it. 
 
