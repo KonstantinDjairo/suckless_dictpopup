@@ -30,7 +30,7 @@ Bind to a shortcut <br> \
 To add a keyboard shortcut, you can use options of your WM or DE. You can also use sxhkd. \
 The popup can be dismissed by clicking on it. 
 
-Here is a snippet from my ~/.config/i3/config showing how to bind `dictpopup` to a keyboard shortcut. \
+Here is a snippet from my ~/.config/i3/config showing how to bind `dictpopup` to a keyboard shortcut. 
 ```console
 # Run dictpopup
 bindsym $mod+c          exec --no-startup-id dictpopup
