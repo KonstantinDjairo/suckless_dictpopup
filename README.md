@@ -32,8 +32,8 @@ that you could try to apply if you like.
 
 
 ## TODO
-- [ ] not done yet
-- [x] done
-
+- [x] Completed
+- [ ] Work in Progress
+<br><br/>
 - [ ] Switch between words in a given sentence by using the arrow keys or any user-defined key;
       Sudachi can be used to accomplish that.
