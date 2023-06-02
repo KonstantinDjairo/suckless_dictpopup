@@ -10,7 +10,7 @@ notice that most of them might be already installed, they are:
 sselp , sdcv, perl
 
 ### Currently tested on:
-- Gnu/Linux 
+- GNU/Linux 
 - FreeBSD
 
 
