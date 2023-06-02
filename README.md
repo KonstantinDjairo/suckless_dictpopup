@@ -35,6 +35,5 @@ that you could try to apply if you like.
 - [ ] not done yet
 - [x] done
 
-- [ ] The ability to select and look up words within a popup's definition using the arrow keys.
-
-
+- [ ] Switch between words in a given sentence by using the arrow keys or any user-defined key;
+      Sudachi can be used to accomplish that.
