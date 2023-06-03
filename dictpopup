@@ -1,4 +1,14 @@
 #!/bin/sh
 
 word=${1:-$(sselp)}
-sdcv -n --utf8-output -e "$word"   | tail -n +5 | perl -pe 's/<[^>]*>//g' | popup
+
+dict_lookup=$(sdcv -n --utf8-output -e "$word")
+
+
+if echo "$dict_lookup" | perl -0777 -ne 'exit 0 if /Nothing similar to/ ; exit 1'; then
+        echo "$dict_lookup" | popup
+
+else
+      echo "$dict_lookup"   | tail -n +5 |  perl -pe 's/<[^>]*>//g' | popup
+
+fi
