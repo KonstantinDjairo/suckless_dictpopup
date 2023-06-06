@@ -7,7 +7,10 @@ This is a very lightweight program to show a popup with the dictionary entry of 
 ## Dependencies
 notice that most of them might be already installed, they are:
 
-sselp , sdcv, perl
+`sselp , sdcv, perl`
+
+
+By using Perl one-liners, we are able to replace the usage of awk, grep, and sed with Perl equivalents, making the code more consistent and eliminating the need for external tools.
 
 ### Currently tested on:
 - GNU/Linux 
