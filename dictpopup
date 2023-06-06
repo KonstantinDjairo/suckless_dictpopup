@@ -1,14 +1,130 @@
 #!/bin/sh
 
-word=${1:-$(sselp)}
+# Invocation: dictpopup [html] [word]
+# - If no argument is provided, the selection is used.
+# - If supplied with the 'html' option, the dictionary output will be piped through lynx
+#   to format HTML as plain text.
 
-dict_lookup=$(sdcv -n --utf8-output -e "$word")
+# TODO: get rid of html and create a dotfile where it reads from, for example ~/.config/dictpopup
+# this shall be better than the spaguethi at the bottom:
 
 
-if echo "$dict_lookup" | perl -0777 -ne 'exit 0 if /Nothing similar to/ ; exit 1'; then
-        echo "$dict_lookup" | popup
+#### Settings
+readonly ANKI_DECK=${ANKI_DECK:-Japanese::sentences}
+readonly ANKI_MODEL=${ANKI_MODEL:-Japanese sentences}
+readonly ANKI_SENTENCE_FIELD=${ANKI_SENTENCE_FIELD:-SentKanji}
+readonly ANKI_WORD_FIELD=${ANKI_WORD_FIELD:-VocabKanji}
+readonly ANKI_DEFINITION_FIELD=${ANKI_DEFINITION_FIELD:-VocabDef}
 
-else
-      echo "$dict_lookup"   | tail -n +5 |  perl -pe 's/<[^>]*>//g' | popup
+HTML_SUPPORT=1
+ANKI_SUPPORT=0
+ANKI_SEARCH_AFTER_ADD=1
+####
 
-fi
+die() {
+    printf '%s\n' "$1"
+    exit 1
+}
+
+checkDependencies() {
+    command -v sdcv >/dev/null 2>&1 || die "sdcv not installed."
+    command -v popup >/dev/null 2>&1 || die "The popup binary is not accessible."
+    command -v xclip >/dev/null 2>&1 || die "xclip is not installed."
+    if ! command -v clipnotify >/dev/null 2>&1; then
+        echo "clipnotify not installed. Anki support disabled"
+        ANKI_SUPPORT=0
+    fi
+    if ! command -v lynx >/dev/null 2>&1; then
+        echo "Lynx not installed. HTML support disabled"
+        HTML_SUPPORT=0
+    fi
+}
+
+__escape_json() {
+    local text="$1"
+    text=${text%"$'\n'"}
+    text=$(printf '%s\n' "$text" | perl -pe 's/"/\\&/g; s/\t/\\t/g; s/\n/\\n/g; s/\r/\\r/g; s/\b/\\b/g; s/\f/\\f/g')
+    printf '%s\n' "$text"
+}
+
+__ankiconnect_request() {
+    curl -fsS localhost:8765 -X POST -d "$1"
+}
+
+anki_search() {
+    local request='{
+        "action": "guiBrowse",
+        "version": 6,
+        "params": {
+            "query": "nid:<note_id>"
+        }
+    }'
+    __ankiconnect_request "${request#<note_id>}" >/dev/null 2>&1
+}
+
+create_anki_card() {
+    local word
+    word=$(__escape_json "$1")
+    local definition="$2"
+    # Remove the first line if it contains 【
+    if printf '%s\n' "$definition" | perl -ne 'print unless /【/ && !$seen++'; then
+        definition=$(printf '%s\n' "$definition" | tail -n +2)
+    fi
+    definition=$(__escape_json "$definition")
+
+    printf 'Please select the sentence\n'
+    clipnotify >/dev/null && sentence=$(xclip -o 2>/dev/null)
+    sentence=$(__escape_json "${sentence/$word/<b>$word</b>}")
+
+    local request
+    request=$(cat <<-EOF
+        {
+            "action": "addNote",
+            "version": 6,
+            "params": {
+                "note": {
+                    "deckName": "$ANKI_DECK",
+                    "modelName": "$ANKI_MODEL",
+                    "fields": {
+                        "$ANKI_SENTENCE_FIELD": "$sentence",
+                        "$ANKI_WORD_FIELD": "$word",
+                        "$ANKI_DEFINITION_FIELD": "$definition"
+                    },
+                    "options": {
+                        "allowDuplicate": true
+                    },
+                    "tags": []
+                }
+            }
+        }
+    EOF
+    )
+
+    if output=$(__ankiconnect_request "$request" 2>&1); then
+        note_id=$(printf '%s\n' "$output" | perl -ne 'print $1 if /"result": (\d+)/')
+        [ $ANKI_SEARCH_AFTER_ADD -eq 1 ] && anki_search "$note_id"
+    else
+        die "$output"
+    fi
+}
+
+main() {
+    if [ "$1" = "html" ] && [ $HTML_SUPPORT -eq 1 ]; then
+        word=${2:-$(xclip -o 2>/dev/null)}
+        dict_entry=$(sdcv -n --utf8-output -e "$word" | perl -0777 -pe 'exit 1 if /Nothing similar to/')
+        dict_entry=$(printf '%s\n' "$dict_entry" | lynx -dump -stdin -assume_charset=UTF-8 -display_charset=UTF-8)
+    else
+        word=${1:-$(xclip -o 2>/dev/null)}
+        dict_entry=$(sdcv -n --utf8-output -e "$word" | perl -0777 -pe 'exit 1 if /Nothing similar to/')
+    fi
+
+    if [ $? -eq 0 ]; then
+        printf '%s\n' "$dict_entry" | popup
+        [ $? -eq 2 ] && [ $ANKI_SUPPORT -eq 1 ] && create_anki_card "$word" "$dict_entry"
+    else
+        echo "Pattern not found"
+    fi
+}
+
+checkDependencies
+main "$@"
