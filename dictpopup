@@ -5,8 +5,9 @@
 # - If supplied with the 'html' option, the dictionary output will be piped through lynx
 #   to format HTML as plain text.
 
-# TODO: get rid of html and create a dotfile where it reads from, for example ~/.config/dictpopup
-# this shall be better than the spaguethi at the bottom:
+# TODO: replace any ocurrence of xclip with sselp
+#       get rid of html and create a dotfile where it reads from, for example ~/.config/dictpopup
+#       this shall be better than the spaguethi at the bottom:
 
 
 #### Settings
