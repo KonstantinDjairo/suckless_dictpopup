@@ -11,11 +11,11 @@
 
 
 #### Settings
-readonly ANKI_DECK=${ANKI_DECK:-Japanese::sentences}
-readonly ANKI_MODEL=${ANKI_MODEL:-Japanese sentences}
-readonly ANKI_SENTENCE_FIELD=${ANKI_SENTENCE_FIELD:-SentKanji}
-readonly ANKI_WORD_FIELD=${ANKI_WORD_FIELD:-VocabKanji}
-readonly ANKI_DEFINITION_FIELD=${ANKI_DEFINITION_FIELD:-VocabDef}
+readonly ANKI_DECK="${ANKI_DECK:-Japanese::sentences}"
+readonly ANKI_MODEL="${ANKI_MODEL:-Japanese sentences}"
+readonly ANKI_SENTENCE_FIELD="${ANKI_SENTENCE_FIELD:-SentKanji}"
+readonly ANKI_WORD_FIELD="${ANKI_WORD_FIELD:-VocabKanji}"
+readonly ANKI_DEFINITION_FIELD="${ANKI_DEFINITION_FIELD:-VocabDef}"
 
 HTML_SUPPORT=1
 ANKI_SUPPORT=0
@@ -42,10 +42,11 @@ checkDependencies() {
 }
 
 __escape_json() {
-    local text="$1"
+    text="$1"
     text=${text%"$'\n'"}
     text=$(printf '%s\n' "$text" | perl -pe 's/"/\\&/g; s/\t/\\t/g; s/\n/\\n/g; s/\r/\\r/g; s/\b/\\b/g; s/\f/\\f/g')
     printf '%s\n' "$text"
+    unset text
 }
 
 __ankiconnect_request() {
@@ -53,7 +54,7 @@ __ankiconnect_request() {
 }
 
 anki_search() {
-    local request='{
+    request='{
         "action": "guiBrowse",
         "version": 6,
         "params": {
@@ -61,12 +62,12 @@ anki_search() {
         }
     }'
     __ankiconnect_request "${request#<note_id>}" >/dev/null 2>&1
+    unset request
 }
 
 create_anki_card() {
-    local word
     word=$(__escape_json "$1")
-    local definition="$2"
+    definition="$2"
     # Remove the first line if it contains 【
     if printf '%s\n' "$definition" | perl -ne 'print unless /【/ && !$seen++'; then
         definition=$(printf '%s\n' "$definition" | tail -n +2)
@@ -77,7 +78,6 @@ create_anki_card() {
     clipnotify >/dev/null && sentence=$(xclip -o 2>/dev/null)
     sentence=$(__escape_json "${sentence/$word/<b>$word</b>}")
 
-    local request
     request=$(cat <<-EOF
         {
             "action": "addNote",
@@ -98,8 +98,8 @@ create_anki_card() {
                 }
             }
         }
-    EOF
-    )
+EOF
+           )
 
     if output=$(__ankiconnect_request "$request" 2>&1); then
         note_id=$(printf '%s\n' "$output" | perl -ne 'print $1 if /"result": (\d+)/')
@@ -107,6 +107,9 @@ create_anki_card() {
     else
         die "$output"
     fi
+    unset word
+    unset definition
+    unset request
 }
 
 main() {
