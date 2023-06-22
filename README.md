@@ -46,6 +46,16 @@ that you could try to apply if you like.
 `popup` can also be used as a standalone program to show the contents of stdin.
 
 
+## Recommended fonts
+For low-resolution monitors i recommend that font: 
+
+<p>
+    <img  src="https://github.com/KonstantinDjairo/suckless_dictpopup/assets/53496273/a34a8a20-9e17-4915-aad4-343e76b75de8" alt>
+    <br><em><a href="https://github.com/KonstantinDjairo/source-han-code-jp">source-han-code-jp<a></em></br>
+          in this picture the font is set at 10px
+</p>
+
+
 ## TODO
 - [x] Completed
 - [ ] Work in Progress
