@@ -2,7 +2,7 @@
 
 This is a very lightweight program to show a popup with the dictionary entry of the selected text. It uses [sdcv](https://github.com/Dushistov/sdcv) for the dictionary lookup and optionally, a slightly modified version of [herbe](https://github.com/dudik/herbe) to display the popup.
 
-![image](https://files.catbox.moe/dx3hf5.png)
+![image](https://myon.surge.sh/i/dictpopup.png)
 
 ## Dependencies
 notice that most of them might be already installed, they are:
