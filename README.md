@@ -2,7 +2,7 @@
 
 This is a very lightweight program to show a popup with the dictionary entry of the selected text. It uses [sdcv](https://github.com/Dushistov/sdcv) for the dictionary lookup and optionally, a slightly modified version of [herbe](https://github.com/dudik/herbe) to display the popup.
 
-![image](https://github.com/KonstantinDjairo/suckless_dictpopup/assets/53496273/84737a28-2035-40de-ba4b-cd436168b282)
+![image](misc/showcase.png)
 
 ## Dependencies
 notice that most of them might be already installed, they are:
