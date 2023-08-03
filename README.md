@@ -49,3 +49,4 @@ that you could try to apply if you like.
 <br><br/>
 - [ ] Switch between words in a given sentence by using the arrow keys or any user-defined key;
       Sudachi can be used to accomplish that.
+- [ ] Clipboard watch toggle 
