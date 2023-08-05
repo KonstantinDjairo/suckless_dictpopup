@@ -1,14 +1,12 @@
 #!/bin/sh
 
 word=${1:-$(sselp)}
+word_without_spaces=$(echo "$word" | tr -d ' ')
 
-dict_lookup=$(sdcv -n --utf8-output -e "$word")
+dict_lookup=$(sdcv -n --utf8-output -e "$word_without_spaces")
 
-
-if echo "$dict_lookup" | perl -0777 -ne 'exit 0 if /Nothing similar to/ ; exit 1'; then
-        echo "$dict_lookup" | popup
-
+if echo "$dict_lookup" | perl -0777 -ne 'exit 0 if /Nothing similar to/; exit 1'; then
+    echo "$dict_lookup" | popup
 else
-      echo "$dict_lookup"   | tail -n +5 |  perl -pe 's/<[^>]*>//g' | popup
-
+    echo "$dict_lookup" | perl -0777 -pe 's/^.*\n.*\n.*\n.*\n//; s/<[^>]*>//g' | popup
 fi
