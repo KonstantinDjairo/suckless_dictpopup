@@ -1,6 +1,6 @@
 # suckless_dictpopup
 
-This is a very lightweight program to show a popup with the dictionary entry of the selected text. It uses [sdcv](https://github.com/Dushistov/sdcv) for the dictionary lookup and optionally, a slightly modified version of [herbe](https://github.com/dudik/herbe) to display the popup.
+This is a very lightweight program to show a popup with the dictionary entry of the selected text. It uses Xlib for displaying the popup and [sdcv](https://github.com/Dushistov/sdcv) for the dictionary lookup.
 
 ![image](misc/showcase.png)
 
