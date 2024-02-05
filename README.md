@@ -1,6 +1,8 @@
 # suckless_dictpopup
 
 This is a very lightweight program to show a popup with the dictionary entry of the selected text. It uses Xlib for displaying the popup and [sdcv](https://github.com/Dushistov/sdcv) for the dictionary lookup.
+<br></br>
+DISCLAIMER: That program is intended to be used for reading monolingual dictionaries in goldendict-ng , it can serve others purposes, but the main goal is that you don't need to wait years until you complete your monolingual transition.
 
 ![image](misc/showcase.png)
 
