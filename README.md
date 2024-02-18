@@ -17,7 +17,12 @@ sselp , sdcv, perl
 - FreeBSD
 
 
-## Setup
+## Installation
+### in Guix
+- suckless_dictpopup is available as a package in our [repository](https://codeberg.org/hashirama/ajatt-tools-guix) 
+
+<br></br>
+### in non-guix systems
 First setup [sdcv](https://github.com/Dushistov/sdcv) according to their github page.
 Then install with `sudo make install`. \
 Uninstall with `sudo make uninstall`
