@@ -1,7 +1,7 @@
 static const char *background_color = "#2E3440";
 static const char *border_color = "#ececec";
 static const char *font_color = "#ececec";
-static const char *font_pattern = "Noto Sans Mono CJK JP:size=12";
+static const char *font_pattern = "Noto Sans Mono CJK JP:size=10";
 static const unsigned line_spacing = 5;
 static const unsigned int padding = 15;
 
